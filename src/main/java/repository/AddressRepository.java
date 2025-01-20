@@ -22,6 +22,19 @@ public class AddressRepository {
         return address;
     }
 
+    // Update Address
+
+    public Address updateAddress(int id, String city,String street,String houseNumber){
+        Address address = getAddressById(id);
+        if(address != null){
+            address.setCity(city);
+            address.setStreet(street);
+            address.setHouseNumber(houseNumber);
+            return address;
+        }
+        return null;
+    }
+
     // Get Address By Id
 
     public Address getAddressById(int id){

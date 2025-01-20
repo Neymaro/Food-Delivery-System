@@ -1,11 +1,13 @@
 package service;
 import model.Customer;
+import model.Address;
 import repository.CustomerRepository;
 import java.util.List;
 
 public class CustomerService {
     private static CustomerService customerService;
     private CustomerRepository customerRepository = new CustomerRepository();
+    private AddressService addressService = AddressService.getAddressServiceInstance();
     private CustomerService() {}
     public static CustomerService getCustomerServiceInstance() {
         if (customerService == null) {
@@ -16,16 +18,15 @@ public class CustomerService {
 
 
     // Add the customer
-    public Customer addCustomer(String name, int phoneNumber,int addressId) {
-        if (name.isEmpty() || phoneNumber == 0) {
-            throw new IllegalArgumentException("Name and phone Number cannot be empty");
+    public Customer addCustomer(String name, int phoneNumber,Integer addressId) {
+        if(addressId == null || addressId == 0 ) {
+            String city = "default";
+            String street = "default";
+            String houseNumber = "default";
+            Address address = addressService.addAddress(city,street,houseNumber);
+            addressId = address.getAddress_id();
         }
-
-        if(addressId == 0) {
-            throw new IllegalArgumentException("AddressId cannot be empty");
-        }
-        return customerRepository.addCustomer(name, phoneNumber, addressId);
-
+        return customerRepository.addCustomer(name,phoneNumber,addressId);
         }
 
     // Show all Customer

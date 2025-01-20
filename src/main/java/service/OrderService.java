@@ -19,6 +19,13 @@ public class OrderService {
         }
         return orderService;
     }
+    // Find by Order ID
+    public Order getOrderById(int id) {
+        if (orderRepository.getOrderById(id) == null) {
+            throw new IllegalArgumentException("Courier not found");
+        }
+        return orderRepository.getOrderById(id);
+    }
 
     // Creating Order Validation
     public Order createOrder(int customerID, String pickUpAddress,String deliveryAddress){

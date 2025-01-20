@@ -23,6 +23,19 @@ public class AddressService {
         return addressRepository.addAdress(city,street,houseNumber);
     }
 
+    // Update Address
+
+    public Address updateAddress(int id,String city,String street,String houseNumber) {
+        if(street.isEmpty() || houseNumber.isEmpty() || city.isEmpty()) {
+            throw new IllegalArgumentException("Please fill all the required fields");
+        }
+        Address newAddress = addressRepository.updateAddress(id,city,street,houseNumber);
+        if(newAddress == null) {
+            throw new IllegalArgumentException("Please fill all the required fields");
+        }
+        return newAddress;
+    }
+
     // Find all address
 
     public List<Address> showAllAddresses() {

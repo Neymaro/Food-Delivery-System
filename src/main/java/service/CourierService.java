@@ -9,7 +9,6 @@ public class CourierService {
     private static CourierService courierService;
     private CourierRepository courierRepository =new CourierRepository();
 
-
     public static CourierService getCourierServiceInstance(){
         if(courierService == null){
             courierService = new CourierService();
@@ -46,7 +45,7 @@ public class CourierService {
             throw new IllegalArgumentException("Courier not found");
         }
         if (courier.isCourierStatus() == isAvailable ){
-            throw new IllegalArgumentException("It is already how you wish to enter: " + id);
+            throw new IllegalArgumentException(id + " status is already :" + " " + courier.isCourierStatus());
         }
         return courierRepository.updateCourierAvailability(id,isAvailable);
     }

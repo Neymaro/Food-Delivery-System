@@ -7,22 +7,26 @@ import java.util.List;
 
 public class CourierController {
 
-    private static CourierService courierService = CourierService.getCourierServiceInstance();
-
+    private final CourierService courierService;
+    // Dependency Injection
+    public CourierController(CourierService courierService) {
+        this.courierService = courierService;
+    }
+    // Add Courier
     public String addCourier(String courierName, boolean isAvailable) {
         if(courierName == null || courierName.isEmpty()) {
             return "You have to fill the courier name!";
         }
         Courier courier = courierService.createCourier(courierName, isAvailable);
-        return "Courier added successfully!" + courier.toString();
-
+        return "Courier added successfully!\n"
+        + courier.toString();
     }
-
+    // Update Courier
     public String updateCourier(int courierId, boolean newStatus) {
         try{
             boolean success = courierService.updateCourier(courierId,newStatus);
             if (success) {
-                return courierService.getCourierById(courierId) + "status updated successfully!";
+                return courierService.getCourierById(courierId) + " status updated successfully!";
             }else{
                 return "Courier not found or courier is not updated!";
             }
@@ -30,7 +34,7 @@ public class CourierController {
             return e.getMessage();
         }
     }
-
+    // Show All Courier
     public List<Courier> showAllCourier(){
         List<Courier> couriers = courierService.getAllCouriers();
         if (couriers == null || couriers.isEmpty()) {
@@ -41,7 +45,7 @@ public class CourierController {
             for (Courier courier : couriers) {
                 System.out.println("ID: " + courier.getCourierID()
                         + " Courier Name: "
-                        + courier.getCourierName() );
+                        + courier.getCourierName());
                 System.out.println(" ************* ");
             }
         }
